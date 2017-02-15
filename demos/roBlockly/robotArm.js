@@ -10,7 +10,10 @@ Blockly.Blocks['move_to_dropdowns'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("Move")
-        .appendField(new Blockly.FieldDropdown([["directly","direct"], ["quickly","quick"], ["circularly", "circular"], ["smoothly","smooth"]]), "move_type")
+        .appendField(new Blockly.FieldDropdown([["directly","direct"], 
+                                                ["quickly","quick"], 
+                                                ["circularly", "circular"], 
+                                                ["smoothly","smooth"]]), "move_type")
         .appendField("to")
         .appendField(new Blockly.FieldVariable("home"), "dest");
     this.setPreviousStatement(true, null);
@@ -21,10 +24,48 @@ Blockly.Blocks['move_to_dropdowns'] = {
   }
 };
 
+Blockly.Blocks['move_to_xyz'] = {
+  init: function() {
+    this.jsonInit({
+      "message0": "Move %1 to x:%2 y: %3 z: %4",
+      "args0": [
+        {
+          "type": "field_dropdown",
+          "name": "move_type",
+          "options":
+            [["directly","direct"], 
+              ["quickly","quick"], 
+              ["circularly", "circular"], 
+              ["smoothly","smooth"]]
+        },
+        {
+          "type": "input_value",
+          "name": "x",
+          "check": "Number"
+        },
+        {
+          "type": "input_value",
+          "name": "y",
+          "check": "Number"
+        },
+        {
+          "type": "input_value",
+          "name": "z",
+          "check": "Number"
+        }
+      ],
+      "inputsInline": true,
+      "colour": 60,
+      "helpUrl": Blockly.Msg.MATH_ARITHMETIC_HELPURL,
+      "previousStatement": null,
+      "nextStatement": null,
+    });
+  }
+};
+
 Blockly.Blocks['define_locale'] = {
   init: function() {
-    this.appendDummyInput()
-        .appendField("Define Location");
+    this.appendDummyInput().appendField("Define Location");
     this.setColour(60);
     this.setTooltip('');
     this.setHelpUrl('');
@@ -90,6 +131,52 @@ Blockly.Blocks['config_locale'] = {
     this.setColour(180);
     this.setTooltip('');
     this.setHelpUrl('');
+  }
+};
+
+Blockly.Blocks['edit_locale'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Edit Location: ")
+        .appendField(new Blockly.FieldVariable("home"), "locale");
+    this.setColour(60);
+    this.setTooltip('');
+    this.setHelpUrl('');
+    this.setMutator(new Blockly.Mutator(['']));
+  },
+  /**
+   * Populate the mutator's dialog with this block's components.
+   */
+  decompose: function(workspace) {
+    var configBlock = workspace.newBlock('config_locale');
+    configBlock.initSvg();
+    var nameInp = workspace.newBlock('text');
+    nameInp.initSvg();
+    nameInp.getField("TEXT").setValue("New Location");
+    configBlock.getInput("locale_name").connection.connect(nameInp.outputConnection);
+    var xInp = workspace.newBlock('math_number');
+    xInp.initSvg();
+    xInp.getField("NUM").setValue(180);
+    configBlock.getInput("x").connection.connect(xInp.outputConnection);
+    var yInp = workspace.newBlock('math_number');
+    yInp.getField("NUM").setValue(180);
+    yInp.initSvg();
+    configBlock.getInput("y").connection.connect(yInp.outputConnection);
+    var zInp = workspace.newBlock('math_number');
+    zInp.getField("NUM").setValue(180);
+    zInp.initSvg();
+    configBlock.getInput("z").connection.connect(zInp.outputConnection);
+    return configBlock;
+  },
+  compose: function(containerBlock) {
+  },
+  mutationToDom: function(workspace) {
+    var container = document.createElement('mutation');
+    container.setAttribute('x', this.getFieldValue('x'));
+    return container;
+  },
+  domToMutation: function(container) {
+    this.x = container.getAttribute('x');
   }
 };
 
