@@ -40,21 +40,21 @@
           <statement name="steps">
             <block type="configure_hand">
               <next>
-                <block type="open_hand">
+                <block type="open_close_hand">
                   <next>
                     <block type="move_to_location">
+                      <field name="move_type">direct</field>
+                      <field name="dest">pick_up_location</field>
                       <next>
-                        <block type="close_hand">
+                        <block type="pick_up_release">
                           <next>
-                            <block type="pick_up">
+                            <block type="move_to_location">
+                              <field name="dest">release_location</field>
                               <next>
-                                <block type="move_to_location">
+                                <block type="pick_up_release">
+                                  <field name="pick_up_release">release</field>
                                   <next>
-                                    <block type="drop">
-                                      <next>
-                                        <block type="go_home"></block>
-                                      </next>
-                                    </block>
+                                    <block type="move_to_location"></block>
                                   </next>
                                 </block>
                               </next>
@@ -72,14 +72,26 @@
         <block type="button_press">
           <field name="NAME">Button Press</field>
           <statement name="steps">
-            <block type="close_hand">
+            <block type="open_close_hand">
+              <field name="open_close_hand">close</field>
               <next>
-                <block type="move_to_location">
+                <block type="change_arm_by">
+                  <value name="dist">
+                    <shadow type="math_number">
+                      <field name="NUM">20</field>
+                    </shadow>
+                  </value>
                   <next>
-                    <block type="move_to_location"></block>
+                    <block type="change_arm_by">
+                      <value name="dist">
+                        <shadow type="math_number">
+                          <field name="NUM">-20</field>
+                        </shadow>
+                      </value>
+                    </block>
                   </next>
                 </block>
-              </next>
+              </next>   
             </block>
           </statement>
         </block>
@@ -87,33 +99,40 @@
       <category name="Robot Arm" colour="#a5a55b">
         <block type="define_locale"></block>
         <block type="edit_locale"></block>
-        <block type="move_to_dropdowns"></block>
+        <block type="move_to_location"></block>
         <block type="move_to_xyz">
-        <value name="x">
-          <shadow type="math_number">
-            <field name="NUM">180</field>
-          </shadow>
-        </value>
-        <value name="y">
-          <shadow type="math_number">
-            <field name="NUM">180</field>
-          </shadow>
-        </value>
-        <value name="z">
-          <shadow type="math_number">
-            <field name="NUM">180</field>
-          </shadow>
-        </value>
+          <value name="x">
+            <shadow type="math_number">
+              <field name="NUM">180</field>
+            </shadow>
+          </value>
+          <value name="y">
+            <shadow type="math_number">
+              <field name="NUM">180</field>
+            </shadow>
+          </value>
+          <value name="z">
+            <shadow type="math_number">
+              <field name="NUM">180</field>
+            </shadow>
+          </value>
+        </block>
+        <block type="change_arm_by">
+          <value name="dist">
+            <shadow type="math_number">
+              <field name="NUM">100</field>
+            </shadow>
+          </value>
         </block>
         <!-- <block type="move_to_location"></block> -->
         <!-- <block type="go_home"></block> -->
       </category>
       <category name="Robot Hand" colour="#5b6da5">
+        <block type="define_obj"></block>
+        <block type="edit_obj"></block>
         <block type="configure_hand"></block>
-        <block type="open_hand"></block>
-        <block type="close_hand"></block>
-        <block type="pick_up"></block>
-        <block type="drop"></block>
+        <block type="open_close_hand"></block>
+        <block type="pick_up_release"></block>
       </category>
       <sep></sep>
       <category name="Logic" colour="#5C81A6">

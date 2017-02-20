@@ -6,7 +6,7 @@
 // goog.require('Blockly.Blocks');
 
 
-Blockly.Blocks['move_to_dropdowns'] = {
+Blockly.Blocks['move_to_location'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("Move")
@@ -180,82 +180,124 @@ Blockly.Blocks['edit_locale'] = {
   }
 };
 
+Blockly.Blocks['change_arm_by'] = {
+  init: function() {
+    this.jsonInit({
+      "type": "change_arm",
+      "message0": "Change %1 by %2 %3",
+      "args0": [
+        {
+          "type": "field_dropdown",
+          "name": "axis",
+          "options": [
+            [
+              "x",
+              "x"
+            ],
+            [
+              "y",
+              "y"
+            ],
+            [
+              "z",
+              "z"
+            ]
+          ]
+        },
+        {
+          "type": "input_dummy"
+        },
+        {
+          "type": "input_value",
+          "name": "dist",
+          "check": "Number"
+        }
+      ],
+      "inputsInline": true,
+      "colour": 60,
+      "helpUrl": Blockly.Msg.MATH_ARITHMETIC_HELPURL,
+      "previousStatement": null,
+      "nextStatement": null,
+    });
+  }
+};
+
 ////////////////////////////
 //     Old blocks/ideas   //
 ////////////////////////////
 
-Blockly.Blocks['move_to_location'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("Move to Location");
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour(60);
-    this.setTooltip('');
-    this.setHelpUrl('');
-    this.setMutator(new Blockly.Mutator(['']));
-    this.x = 1;
-    this.y = 2;
-    this.z = 3;
-  },
+// Blockly.Blocks['move_to_location'] = {
+//   init: function() {
+//     this.appendDummyInput()
+//         .appendField("Move to Location");
+//     this.setPreviousStatement(true, null);
+//     this.setNextStatement(true, null);
+//     this.setColour(60);
+//     this.setTooltip('');
+//     this.setHelpUrl('');
+//     this.setMutator(new Blockly.Mutator(['']));
+//     this.x = 1;
+//     this.y = 2;
+//     this.z = 3;
+//   },
 
-   /**
-   * Populate the mutator's dialog with this block's components.
-   */
-  decompose: function(workspace) {
-    var configBlock = workspace.newBlock('config_move');
-    configBlock.initSvg();
-    return configBlock;
-  },
-  compose: function(containerBlock) {
-  },
-  mutationToDom: function(workspace) {
-    var container = document.createElement('mutation');
-    container.setAttribute('x', this.getFieldValue('x'));
-    return container;
-  },
-  domToMutation: function(container) {
-    this.x = container.getAttribute('x');
-  }
+//    /**
+//    * Populate the mutator's dialog with this block's components.
+//    */
+//   decompose: function(workspace) {
+//     var configBlock = workspace.newBlock('config_move');
+//     configBlock.initSvg();
+//     return configBlock;
+//   },
+//   compose: function(containerBlock) {
+//   },
+//   mutationToDom: function(workspace) {
+//     var container = document.createElement('mutation');
+//     container.setAttribute('x', this.getFieldValue('x'));
+//     return container;
+//   },
+//   domToMutation: function(container) {
+//     this.x = container.getAttribute('x');
+//   }
 
-};
+// };
 
-Blockly.Blocks['config_move'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("Configure Move");
-    this.appendDummyInput()
-        .setAlign(Blockly.ALIGN_RIGHT)
-        .appendField("X:")
-        .appendField(new Blockly.FieldNumber(180, -360, 360, 0.01), "x");
-    this.appendDummyInput()
-        .setAlign(Blockly.ALIGN_RIGHT)
-        .appendField("Y:")
-        .appendField(new Blockly.FieldNumber(180, -360, 360, 0.01), "y");
-    this.appendDummyInput()
-        .setAlign(Blockly.ALIGN_RIGHT)
-        .appendField("Z:")
-        .appendField(new Blockly.FieldNumber(180, -360, 360, 0.01), "z");
-    this.appendDummyInput()
-        .appendField("Move Type")
-        .appendField(new Blockly.FieldDropdown([["Direct","Direct"], ["Fast","Fast"], ["Smooth","Smooth"]]), "type");
-    this.setInputsInline(false);
-    this.setColour(180);
-    this.setTooltip('');
-    this.setHelpUrl('');
-  }
-};
+// Blockly.Blocks['config_move'] = {
+//   init: function() {
+//     this.appendDummyInput()
+//         .appendField("Configure Move");
+//     this.appendDummyInput()
+//         .setAlign(Blockly.ALIGN_RIGHT)
+//         .appendField("X:")
+//         .appendField(new Blockly.FieldNumber(180, -360, 360, 0.01), "x");
+//     this.appendDummyInput()
+//         .setAlign(Blockly.ALIGN_RIGHT)
+//         .appendField("Y:")
+//         .appendField(new Blockly.FieldNumber(180, -360, 360, 0.01), "y");
+//     this.appendDummyInput()
+//         .setAlign(Blockly.ALIGN_RIGHT)
+//         .appendField("Z:")
+//         .appendField(new Blockly.FieldNumber(180, -360, 360, 0.01), "z");
+//     this.appendDummyInput()
+//         .appendField("Move Type")
+//         .appendField(new Blockly.FieldDropdown([["Direct","Direct"], ["Fast","Fast"], ["Smooth","Smooth"]]), "type");
+//     this.setInputsInline(false);
+//     this.setColour(180);
+//     this.setTooltip('');
+//     this.setHelpUrl('');
+//   }
+// };
 
 
-Blockly.Blocks['go_home'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("Move to")
-        .appendField(new Blockly.FieldVariable("home"), "loc_name");
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour(60);
-    this.setTooltip('');
-    this.setHelpUrl('');
-  }
-};
+// Blockly.Blocks['go_home'] = {
+//   init: function() {
+//     this.appendDummyInput()
+//         .appendField("Move to")
+//         .appendField(new Blockly.FieldVariable("home"), "loc_name");
+//     this.setPreviousStatement(true, null);
+//     this.setNextStatement(true, null);
+//     this.setColour(60);
+//     this.setTooltip('');
+//     this.setHelpUrl('');
+//   }
+// };

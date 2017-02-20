@@ -7,8 +7,7 @@
 Blockly.Blocks['pick_and_place'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField(new Blockly.FieldTextInput("Pick and Place"), "pick_n_place_name")
-        .appendField(new Blockly.FieldImage("http://www.clker.com/cliparts/V/u/o/j/G/b/white-cog-hi.png", 15, 15, "*"));
+        .appendField(new Blockly.FieldTextInput("Pick and Place"), "pick_n_place_name");
     this.appendStatementInput("steps")
         .setCheck(null);
     this.setColour(150);
@@ -20,13 +19,34 @@ Blockly.Blocks['pick_and_place'] = {
 Blockly.Blocks['button_press'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField(new Blockly.FieldTextInput("Button Press"), "NAME")
-        .appendField(new Blockly.FieldImage("http://www.clker.com/cliparts/V/u/o/j/G/b/white-cog-hi.png", 15, 15, "*"));
+        .appendField(new Blockly.FieldTextInput("Button Press"), "NAME");
     this.appendStatementInput("steps")
         .setCheck(null);
+    this.setColour(150);
+    this.setTooltip('');
+    this.setHelpUrl('');
+  }
+};
+
+Blockly.Blocks['pick_and_place_a'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Pick and Place A");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(150);
+    this.setTooltip('');
+    this.setHelpUrl('');
+  }
+};
+
+Blockly.Blocks['pressbuttona'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Press Button A");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(165);
     this.setTooltip('');
     this.setHelpUrl('');
   }
